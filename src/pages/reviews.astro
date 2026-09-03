@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const path = "/reviews/";
+const title = "Reviews | Huddersfield Removals Rated 4.8/5 on Google";
+const description = `Huddersfield Removals is rated ${business.rating.value}/5 on Google. Read customer feedback on our Google Business Profile.`;
+const crumbs = [{ name: "Reviews", path }];
+const schema = buildSchemaGraph({ pageType: "reviews", path, title, description, breadcrumbs: crumbs, includeRating: true });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Customer reviews"
+    lede="We don't curate or cherry-pick, every review is on our public Google profile, good days and bad."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="review-summary">
+        <span class="score">{business.rating.value}</span>
+        <span>
+          <span class="stars" aria-hidden="true">★★★★★</span><br />
+          Rated <strong>{business.rating.value}/5 on Google</strong><br />
+          <small style="color: var(--muted);">Live count on our Google profile</small>
+        </span>
+        <span style="margin-left: auto;">
+          <a class="btn btn-primary" href={business.hasMap} rel="noopener" target="_blank">
+            Read all reviews on Google <Icon name="arrow" />
+          </a>
+        </span>
+      </div>
+
+      <div class="grid grid-3 mt-2">
+        <div class="feature">
+          <div class="feature-icon"><Icon name="shield" /></div>
+          <div>
+            <h3>Why we link out instead of quoting</h3>
+            <p>Reviews you read on Google can't be edited, reordered or invented by us. That's the point.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icon name="star" /></div>
+          <div>
+            <h3>Leave us a review</h3>
+            <p>Moved with us recently? A review on <a href={business.hasMap} rel="noopener" target="_blank">our Google profile</a> genuinely helps a small local firm.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"><Icon name="checkCircle" /></div>
+          <div>
+            <h3>Something went wrong?</h3>
+            <p>Tell us first, call {business.phoneDisplay} or email <a href={`mailto:${business.email}`}>{business.email}</a> and we'll put it right.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Join our happy movers" />
+</BaseLayout>

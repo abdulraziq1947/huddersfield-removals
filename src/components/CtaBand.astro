@@ -1,0 +1,29 @@
+---
+import { business } from "../data/business";
+import Icon from "./Icon.astro";
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+const {
+  title = "Ready to book your move?",
+  text = `Call us seven days a week, ${business.hours.label}, or send an enquiry and we'll come back with a clear written quote.`,
+} = Astro.props;
+---
+<section class="section-tight">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>{title}</h2>
+        <p>{text}</p>
+      </div>
+      <div class="cta-band-actions">
+        <a class="btn btn-primary btn-lg" href={`tel:${business.phoneE164}`}>
+          <Icon name="phone" /> {business.phoneDisplay}
+        </a>
+        <a class="btn btn-quote btn-lg" href="/contact/">Get a free quote</a>
+      </div>
+    </div>
+  </div>
+</section>

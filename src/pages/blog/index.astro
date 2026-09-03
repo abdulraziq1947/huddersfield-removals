@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { getCollection } from "astro:content";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const path = "/blog/";
+const title = "Removals Blog | Tips & Local Moving Advice";
+const description =
+  "Moving tips, packing advice and local know-how from the Huddersfield Removals team.";
+const crumbs = [{ name: "Blog", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="The removals blog"
+    lede="Tips, checklists and local advice from a crew that moves Huddersfield every week."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container grid grid-3">
+      {posts.map((p) => (
+        <article class="card">
+          <div class="card-body">
+            <p class="article-meta" style="margin-bottom: 0.5rem;">
+              <time datetime={p.data.pubDate.toISOString()}>
+                {p.data.pubDate.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+              </time>
+            </p>
+            <h3><a href={`/blog/${p.id}/`}>{p.data.title}</a></h3>
+            <p>{p.data.description}</p>
+            <span class="card-link">Read post <Icon name="arrow" /></span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import MapEmbed from "../../components/MapEmbed.astro";
+import FormEmbed from "../../components/FormEmbed.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import FaqList from "../../components/FaqList.astro";
+import { areas } from "../../data/areas";
+import { areaContent } from "../../data/area-content";
+import { business } from "../../data/business";
+import { services } from "../../data/services";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+import { images } from "../../data/images";
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { slug: a.slug }, props: { area: a } }));
+}
+
+const { area } = Astro.props;
+const path = `/areas/${area.slug}/`;
+const title = `Removals ${area.name} | House & Office Moves`;
+const description = `Local removal company serving ${area.name}, Huddersfield. House, office, student and furniture moves with £50k goods-in-transit cover. Open 7 days, 7am–9pm. Call 01484 212450.`;
+const origin = `${area.latitude},${area.longitude}`;
+const crumbs = [
+  { name: "Areas", path: "/areas/" },
+  { name: area.name, path },
+];
+const schema = buildSchemaGraph({
+  pageType: "area",
+  path,
+  title,
+  description,
+  breadcrumbs: crumbs,
+  service: { name: `Removals in ${area.name}`, slug: area.slug, description },
+  place: { name: area.name, slug: area.slug, latitude: area.latitude, longitude: area.longitude, landmark: area.landmark },
+  image: {
+    src: images.areasDefault.src,
+    alt: images.areasDefault.alt,
+    lat: area.latitude,
+    lng: area.longitude,
+    locationName: `${area.name}, Huddersfield`,
+  },
+});
+
+// nearest other areas by simple distance
+const nearby = areas
+  .filter((a) => a.slug !== area.slug)
+  .map((a) => ({ ...a, d: (a.latitude - area.latitude) ** 2 + (a.longitude - area.longitude) ** 2 }))
+  .sort((a, b) => a.d - b.d)
+  .slice(0, 8);
+
+const content = areaContent[area.slug];
+const topServices = services.slice(0, 6);
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title={`Removals in ${area.name}`}
+    lede={`House, office, student and furniture removals for ${area.name}, a short drive from our Belmont Close base in HD1. Fixed written quotes and crews who know these streets.`}
+    crumbs={crumbs}
+  >
+    <ul class="hero-chips">
+      <li><Icon name="pin" /> Serving {area.name} &amp; surrounds</li>
+      <li><Icon name="shield" /> £50k goods-in-transit cover</li>
+      <li><Icon name="clock" /> 7 days a week, 7am–9pm</li>
+    </ul>
+  </PageHero>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <h2>Your local movers in {area.name}</h2>
+        {(content?.intro ?? [
+          `We move households and businesses in ${area.name} every month, so the practical details, where a 3.5-tonne Luton can park, which streets are tight, how long the run to our HD1 base really takes, are things we already know. Routes are planned from local landmarks like ${area.landmark}, not guessed from a postcode.`,
+          `Every ${area.name} move includes protective blankets and wrapping, careful loading, and placement in the right rooms at your new address. Packing, furniture dismantling and reassembly are available on any job, and long-distance moves from ${area.name} to anywhere on the UK mainland use the same crew door to door.`,
+          `You'll get a fixed written quote before we start, with £50,000 goods-in-transit cover per van load and £1 million public liability insurance behind it. If parking near your property is restricted, Kirklees Council offers parking dispensations for removal vans, we'll advise what's needed when we survey your move.`,
+        ]).map((p) => <p>{p}</p>)}
+
+        {content && (
+          <>
+            <h2>Housing and move types in {area.name}</h2>
+            <p>{content.housing}</p>
+            <h2>Access and streets</h2>
+            <p>{content.access}</p>
+            <h2>Parking for removal vans</h2>
+            <p>{content.parking}</p>
+            <h2>Typical moves we handle in {area.name}</h2>
+            <p>{content.typicalMoves}</p>
+            <h2>Questions about moving in {area.name}</h2>
+            <FaqList items={content.faqs} />
+          </>
+        )}
+
+        <h2>Services available in {area.name}</h2>
+        <ul class="chip-grid" style="margin-bottom: 2rem;">
+          {topServices.map((s) => (
+            <li><a class="chip" href={`/${s.slug}/`}>{s.h1}</a></li>
+          ))}
+          <li><a class="chip" href="/services/"><strong>All services →</strong></a></li>
+        </ul>
+
+        <h2>Directions from {area.landmark}</h2>
+        <p style="color: var(--muted);">
+          Driving route from {area.landmark} in {area.name} to our base at {business.address.streetAddress}, {business.address.postalCode}.
+        </p>
+        <MapEmbed mode="directions" origin={origin} originLabel={area.landmark} />
+      </div>
+
+      <div class="sticky-side">
+        <FormEmbed heading={`Moving in ${area.name}?`} />
+        <div class="panel" style="margin-top: 1.5rem;">
+          <h3>Nearby areas we cover</h3>
+          <ul class="chip-grid">
+            {nearby.map((a) => (
+              <li><a class="chip" href={`/areas/${a.slug}/`}><Icon name="pin" /> {a.name}</a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={`Book your ${area.name} move`} />
+</BaseLayout>

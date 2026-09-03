@@ -1,0 +1,187 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FormEmbed from "../components/FormEmbed.astro";
+import Icon from "../components/Icon.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const { hourlyRate, minimumHours } = business.pricing;
+
+const path = "/moving-cost-calculator/";
+const title = "Moving Cost Calculator | Guide Price Estimate";
+const description =
+  `Free moving cost calculator for Huddersfield removals. Estimate a realistic price range for your move in seconds, then get a fixed written quote after a survey.`;
+const crumbs = [{ name: "Cost calculator", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Moving cost calculator"
+    lede="Use this tool for a realistic guide price based on your property size and what needs doing. Fixed written quotes are available after a survey, we can visit in person or work from your videos."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container calc-layout">
+      <div class="panel calc-main">
+        <h2>Estimate your move</h2>
+        <p class="calc-intro">
+          Select your property size, tick any extras that apply, then calculate. This gives a guide range only, a fixed written quote follows a survey.
+        </p>
+
+        <form id="calc" class="calc-form">
+          <div class="calc-group">
+            <h3 class="calc-group-title">Your property</h3>
+            <div class="calc-field">
+              <label class="calc-field-label" for="calc-bedrooms">Property size</label>
+              <select id="calc-bedrooms" name="bedrooms">
+                <option value="0">Studio / single room</option>
+                <option value="1">1 bedroom</option>
+                <option value="2" selected>2 bedrooms</option>
+                <option value="3">3 bedrooms</option>
+                <option value="4">4 bedrooms</option>
+                <option value="5">5+ bedrooms</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="calc-group">
+            <h3 class="calc-group-title">Optional services</h3>
+            <fieldset class="calc-options">
+              <label class="calc-option">
+                <input type="checkbox" name="packing" />
+                <span class="calc-option-text">Add professional packing service</span>
+              </label>
+              <label class="calc-option">
+                <input type="checkbox" name="dismantle" />
+                <span class="calc-option-text">Add furniture dismantling &amp; reassembly</span>
+              </label>
+            </fieldset>
+          </div>
+
+          <div class="calc-group">
+            <h3 class="calc-group-title">Access at either address</h3>
+            <fieldset class="calc-options">
+              <label class="calc-option">
+                <input type="checkbox" name="stairs" />
+                <span class="calc-option-text">Stairs with no lift, or top-floor flat</span>
+              </label>
+              <label class="calc-option">
+                <input type="checkbox" name="parking" />
+                <span class="calc-option-text">Restricted parking or long carry to the van</span>
+              </label>
+            </fieldset>
+          </div>
+
+          <div class="calc-actions">
+            <button class="btn btn-primary" type="button" id="calc-btn">Calculate estimate</button>
+            <div class="calc-result" id="calc-result" aria-live="polite">
+              Your guide estimate appears here
+            </div>
+            <p class="calc-disclaimer">
+              Guide estimate only, final cost depends on volume, access and crew time on the day.
+              Fixed written quotes are confirmed after a survey (in-person visit or video walkthrough).
+              Nothing calculated here is binding on either side.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <aside class="calc-sidebar">
+        <div class="calc-sidebar-stack">
+          <div class="panel">
+            <h3>How we price moves</h3>
+            <ul class="checklist">
+              <li><Icon name="check" /> <span><strong>Volume</strong>, more rooms and furniture means more crew time loading, carrying and placing.</span></li>
+              <li><Icon name="check" /> <span><strong>Access</strong>, stairs, narrow hallways and parking restrictions add time on site.</span></li>
+              <li><Icon name="check" /> <span><strong>Packing &amp; dismantling</strong>, optional services that extend the job where you need them.</span></li>
+              <li><Icon name="check" /> <span><strong>Fixed quotes</strong>, after a survey (we visit you or review your videos), we confirm volume and give a written fixed price valid for three months.</span></li>
+            </ul>
+          </div>
+          <FormEmbed heading="Get a fixed quote after a survey" />
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script define:vars={{ hourlyRate, minimumHours }}>
+    const baseHours = {
+      0: [3, 4],
+      1: [3, 5],
+      2: [4, 6],
+      3: [5, 8],
+      4: [7, 10],
+      5: [9, 12],
+    };
+    const packingHours = {
+      0: [2, 3],
+      1: [3, 4],
+      2: [4, 6],
+      3: [6, 8],
+      4: [8, 10],
+      5: [10, 12],
+    };
+    const dismantleHours = {
+      0: [1, 2],
+      1: [1, 2],
+      2: [1, 2],
+      3: [2, 3],
+      4: [2, 4],
+      5: [3, 4],
+    };
+
+    function estimate(form) {
+      const fd = new FormData(form);
+      const beds = Math.min(5, Math.max(0, Number(fd.get("bedrooms") ?? 2)));
+      const packing = fd.get("packing") === "on";
+      const dismantle = fd.get("dismantle") === "on";
+      const stairs = fd.get("stairs") === "on";
+      const parking = fd.get("parking") === "on";
+
+      let low = baseHours[beds][0];
+      let high = baseHours[beds][1];
+
+      if (packing) {
+        low += packingHours[beds][0];
+        high += packingHours[beds][1];
+      }
+      if (dismantle) {
+        low += dismantleHours[beds][0];
+        high += dismantleHours[beds][1];
+      }
+      if (stairs) {
+        low += 1;
+        high += 2;
+      }
+      if (parking) {
+        low += 1;
+        high += 1;
+      }
+
+      const hoursLow = Math.max(low, minimumHours);
+      const hoursHigh = Math.max(high, minimumHours);
+      const priceLow = hoursLow * hourlyRate;
+      const priceHigh = hoursHigh * hourlyRate;
+
+      return { hoursLow, hoursHigh, priceLow, priceHigh };
+    }
+
+    const btn = document.getElementById("calc-btn");
+    btn?.addEventListener("click", () => {
+      const form = document.getElementById("calc");
+      if (!form) return;
+      const { hoursLow, hoursHigh, priceLow, priceHigh } = estimate(form);
+      const el = document.getElementById("calc-result");
+      if (!el) return;
+
+      const hoursText =
+        hoursLow === hoursHigh
+          ? `${hoursLow} hour${hoursLow === 1 ? "" : "s"}`
+          : `${hoursLow}–${hoursHigh} hours`;
+
+      el.classList.add("is-filled");
+      el.innerHTML = `<strong>£${priceLow.toLocaleString("en-GB")} – £${priceHigh.toLocaleString("en-GB")}</strong><span style="display:block;font-size:0.92em;font-weight:500;color:var(--muted);">Guide estimate based on ~${hoursText} on site. Fixed written quote after survey.</span>`;
+    });
+  </script>
+</BaseLayout>

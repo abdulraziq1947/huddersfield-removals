@@ -1,0 +1,50 @@
+﻿---
+import Icon from "./Icon.astro";
+
+interface Props {
+  origin?: string;
+  originLabel?: string;
+  destination?: string;
+  destinationLabel?: string;
+  mode?: "place" | "directions";
+}
+const { origin, originLabel, destination, destinationLabel, mode = "place" } = Astro.props;
+const key = import.meta.env.PUBLIC_GOOGLE_MAPS_EMBED_KEY;
+const businessAddress = "Flat 18b Belmont Cl, Huddersfield HD1 5DA";
+const dest = "Flat+18b+Belmont+Cl,+Huddersfield+HD1+5DA";
+let src = `https://www.google.com/maps/embed/v1/place?key=${key}&q=${dest}`;
+let label = "Show our location on Google Maps";
+if (mode === "directions" && destination) {
+  const from = origin ?? businessAddress;
+  src = `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(destination)}&mode=driving`;
+  label = destinationLabel
+    ? `Show driving route from Huddersfield to ${destinationLabel}`
+    : "Show driving directions";
+} else if (mode === "directions" && origin) {
+  src = `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(businessAddress)}&mode=driving`;
+  label = originLabel ? `Show route from ${originLabel}` : "Show driving directions";
+}
+---
+<div class="map-facade" data-map-src={src}>
+  <button type="button" data-load-map>
+    <Icon name="pin" />
+    {label}
+    <small>Tap to load the interactive map</small>
+  </button>
+</div>
+<script>
+  document.querySelectorAll("[data-load-map]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const wrap = btn.closest(".map-facade");
+      const src = wrap?.getAttribute("data-map-src");
+      if (!src || !wrap) return;
+      const iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.title = "Google Map";
+      iframe.loading = "lazy";
+      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.allowFullscreen = true;
+      wrap.replaceChildren(iframe);
+    });
+  });
+</script>

@@ -1,0 +1,51 @@
+﻿# --- Legacy WordPress pages ---
+/contact-us/ /contact/ 301
+/about-us/ /about/ 301
+/house-removals/ /house-removals-huddersfield/ 301
+/office-removals/ /office-removals-huddersfield/ 301
+/student-removals/ /student-removals-huddersfield/ 301
+/domestic-removals/ /house-removals-huddersfield/ 301
+/commercial-removals/ /office-removals-huddersfield/ 301
+/man-and-van-service/ /short-distance-moves/ 301
+/storage-huddersfield/ /services/ 301
+/international-removals-huddersfield/ /long-distance-removals/ 301
+/about-huddersfield/ /areas/ 301
+/wp-content/* / 301
+
+# --- Migrated blog posts: old root permalinks -> /blog/ ---
+/how-much-does-it-cost-to-hire-a-huddersfield-removals-company/ /blog/how-much-does-it-cost-to-hire-a-huddersfield-removals-company/ 301
+/10-cheap-removals-tips-save-money-when-moving-house-in-huddersfield/ /blog/10-cheap-removals-tips-save-money-when-moving-house-in-huddersfield/ 301
+/easy-tips-for-moving-your-fridge/ /blog/easy-tips-for-moving-your-fridge/ 301
+/how-to-pack-books-for-your-huddersfield-move-safe-packing-strategies-by-the-book/ /blog/how-to-pack-books-for-your-huddersfield-move-safe-packing-strategies-by-the-book/ 301
+/moving-as-a-senior-in-huddersfield-tips-for-a-smooth-transition/ /blog/moving-as-a-senior-in-huddersfield-tips-for-a-smooth-transition/ 301
+/moving-tips-for-college-students/ /blog/moving-tips-for-college-students/ 301
+/moving-your-office-to-huddersfield-heres-how-to-make-it-easy/ /blog/moving-your-office-to-huddersfield-heres-how-to-make-it-easy/ 301
+/packing-hacks-to-save-you-hassle-when-moving-house-in-huddersfield/ /blog/packing-hacks-to-save-you-hassle-when-moving-house-in-huddersfield/ 301
+/student-friendly-moving-services-tailored-solutions-for-huddersfields-educational-hub/ /blog/student-friendly-moving-services-tailored-solutions-for-huddersfields-educational-hub/ 301
+/student-survival-guide-settling-into-huddersfield-after-your-move/ /blog/student-survival-guide-settling-into-huddersfield-after-your-move/ 301
+/the-dos-and-donts-of-hiring-a-removals-company-in-huddersfield/ /blog/the-dos-and-donts-of-hiring-a-removals-company-in-huddersfield/ 301
+/the-emotional-rollercoaster-of-moving-navigating-change-in-huddersfield/ /blog/the-emotional-rollercoaster-of-moving-navigating-change-in-huddersfield/ 301
+/tips-for-helping-children-adjust-to-a-new-environment/ /blog/tips-for-helping-children-adjust-to-a-new-environment/ 301
+/tips-for-moving-on-a-budget/ /blog/tips-for-moving-on-a-budget/ 301
+/top-5-things-likely-to-get-damaged-during-home-removals/ /blog/top-5-things-likely-to-get-damaged-during-home-removals/ 301
+/what-to-pack-first-during-huddersfield-removals/ /blog/what-to-pack-first-during-huddersfield-removals/ 301
+
+# --- Retired off-topic listicles -> nearest relevant page ---
+/best-three-dessert-shops-in-huddersfield-for-the-ultimate-dessert-treats/ /guides/moving-house-checklist/ 301
+/best-three-picks-for-burger-takeaway-joints-in-huddersfield-2020/ /guides/ 301
+/a-guide-to-the-three-best-taxi-firms-in-huddersfield-for-travellers/ /guides/ 301
+/a-quick-guide-on-finding-the-three-best-ice-cream-vendors-in-huddersfield/ /guides/ 301
+/the-three-best-chemists-in-huddersfield-that-you-should-know-about/ /guides/ 301
+/the-three-best-indian-restaurants-in-huddersfield-you-shouldnt-miss-trying-out/ /guides/ 301
+/a-few-quick-notes-on-the-three-best-outdoor-parks-in-huddersfield/ /guides/ 301
+/5-attractions-you-should-definitely-visit-in-huddersfield/ /areas/ 301
+/how-to-remove-heavy-furniture-by-myself-in-huddersfield/ /guides/how-to-pack-fragile-items/ 301
+/blog/best-three-dessert-shops-in-huddersfield-for-the-ultimate-dessert-treats/ /guides/moving-house-checklist/ 301
+/blog/best-three-picks-for-burger-takeaway-joints-in-huddersfield-2020/ /guides/ 301
+/blog/a-guide-to-the-three-best-taxi-firms-in-huddersfield-for-travellers/ /guides/ 301
+/blog/a-quick-guide-on-finding-the-three-best-ice-cream-vendors-in-huddersfield/ /guides/ 301
+/blog/the-three-best-chemists-in-huddersfield-that-you-should-know-about/ /guides/ 301
+/blog/the-three-best-indian-restaurants-in-huddersfield-you-shouldnt-miss-trying-out/ /guides/ 301
+/blog/a-few-quick-notes-on-the-three-best-outdoor-parks-in-huddersfield/ /guides/ 301
+/blog/5-attractions-you-should-definitely-visit-in-huddersfield/ /areas/ 301
+/blog/how-to-remove-heavy-furniture-by-myself-in-huddersfield/ /guides/how-to-pack-fragile-items/ 301

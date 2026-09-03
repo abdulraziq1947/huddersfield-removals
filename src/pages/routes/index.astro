@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { routes } from "../../data/routes";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+
+const path = "/routes/";
+const title = "Long-Distance Removal Routes from Huddersfield";
+const description =
+  "Popular long-distance removal routes from Huddersfield: Leeds, Manchester, Bradford, Sheffield, York and Halifax. Same crew door to door, fixed written quotes.";
+const crumbs = [{ name: "Routes", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Popular removal routes"
+    lede="The long-distance moves we run most often, every one door to door with the same crew, quoted as a fixed written price."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container grid grid-3">
+      {routes.map((r) => (
+        <article class="card">
+          <div class="card-body">
+            <h3><a href={`/routes/${r.slug}/`}>{r.title}</a></h3>
+            <p>Approximately {r.miles} road miles from our HD1 base, planned start times, strapped loads and £50k goods-in-transit cover.</p>
+            <span class="card-link">View route <Icon name="arrow" /></span>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="container mt-2">
+      <p class="lede">Moving somewhere else? We cover the whole UK mainland, <a href="/long-distance-removals/">see long-distance removals</a>.</p>
+    </div>
+  </section>
+
+  <CtaBand title="Get a fixed quote for your route" />
+</BaseLayout>

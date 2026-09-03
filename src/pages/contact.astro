@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FormEmbed from "../components/FormEmbed.astro";
+import MapEmbed from "../components/MapEmbed.astro";
+import Icon from "../components/Icon.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const path = "/contact/";
+const title = "Contact Huddersfield Removals | Free Quotes 7 Days a Week";
+const description = `Call ${business.phoneDisplay} or send an enquiry for a free removals quote. Open ${business.hours.label} every day. Based at Belmont Close, Huddersfield HD1 5DA.`;
+const crumbs = [{ name: "Contact", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Contact us"
+    lede="Free, no-obligation quotes for any move, call, email or send the form and we'll come straight back to you."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container split">
+      <FormEmbed heading="Send us your move details" />
+
+      <div>
+        <div class="panel" style="margin-bottom: 1.5rem;">
+          <h3>Talk to us directly</h3>
+          <ul class="checklist">
+            <li>
+              <Icon name="phone" style="color: var(--navy);" />
+              <span><strong><a href={`tel:${business.phoneE164}`}>{business.phoneDisplay}</a></strong><br />
+              <small style="color: var(--muted);">Open {business.hours.label}, seven days a week</small></span>
+            </li>
+            <li>
+              <Icon name="mail" style="color: var(--navy);" />
+              <span><strong><a href={`mailto:${business.email}`}>{business.email}</a></strong><br />
+              <small style="color: var(--muted);">We reply within one working day</small></span>
+            </li>
+            <li>
+              <Icon name="pin" style="color: var(--navy);" />
+              <span><strong>{business.address.streetAddress}</strong><br />
+              <small style="color: var(--muted);">{business.address.addressLocality}, {business.address.addressRegion} {business.address.postalCode}</small></span>
+            </li>
+          </ul>
+        </div>
+        <MapEmbed />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

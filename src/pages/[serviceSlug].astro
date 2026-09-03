@@ -1,0 +1,141 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FormEmbed from "../components/FormEmbed.astro";
+import FaqList from "../components/FaqList.astro";
+import MapEmbed from "../components/MapEmbed.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { services } from "../data/services";
+import { routes } from "../data/routes";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+import { getServiceImage } from "../data/images";
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { serviceSlug: s.slug }, props: { service: s } }));
+}
+
+const { service } = Astro.props;
+const path = `/${service.slug}/`;
+const title = service.title;
+const description = service.short;
+const img = getServiceImage(service.slug);
+const crumbs = [
+  { name: "Services", path: "/services/" },
+  { name: service.h1, path },
+];
+const schema = buildSchemaGraph({
+  pageType: "service",
+  path,
+  title,
+  description,
+  breadcrumbs: crumbs,
+  service: { name: service.h1, slug: service.slug, description: service.short },
+  image: img,
+});
+const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+---
+<BaseLayout {title} {description} {path} {schema} ogImage={img.src}>
+  <PageHero title={service.h1} lede={service.short} crumbs={crumbs}>
+    <ul class="hero-chips">
+      <li><Icon name="shield" /> £50k goods-in-transit cover</li>
+      <li><Icon name="clock" /> 7 days a week, 7am–9pm</li>
+      <li><Icon name="checkCircle" /> Fixed written quotes</li>
+    </ul>
+  </PageHero>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <div class="media-frame" style="margin-bottom: 2rem;">
+          <img src={img.src} alt={img.alt} width="960" height="720" loading="eager" fetchpriority="high" />
+        </div>
+        {service.intro.map((p) => <p>{p}</p>)}
+
+        {service.sections?.map((section) => (
+          <>
+            <h2>{section.heading}</h2>
+            {section.paragraphs.map((p) => <p>{p}</p>)}
+          </>
+        ))}
+
+        <h2>What's included</h2>
+        <ul class="checklist">
+          {service.features.map((f) => (
+            <li><Icon name="check" /> <span>{f}</span></li>
+          ))}
+        </ul>
+
+        <h2>Common questions</h2>
+        <FaqList items={service.faqs} />
+
+        {service.slug === "long-distance-removals" && (
+          <>
+            <h2>Popular long-distance routes</h2>
+            <p>
+              These are the inter-city routes we run most often from Huddersfield. Each move uses the same crew door to door, tap a map to see the driving route from our HD1 base.
+            </p>
+            {routes.map((route) => {
+              const dest = route.title.replace("Huddersfield to ", "").replace(" Removals", "");
+              return (
+                <div style="margin-bottom: 2rem;">
+                  <h3>
+                    <a href={`/routes/${route.slug}/`}>Huddersfield to {dest}</a>
+                    <span style="font-weight: 500; color: var(--muted); font-size: 0.95rem;">, ~{route.miles} miles, {route.driveTime}</span>
+                  </h3>
+                  <MapEmbed mode="directions" destination={route.destinationPlace} destinationLabel={dest} />
+                </div>
+              );
+            })}
+            <p>
+              Moving somewhere else on the UK mainland? <a href="/contact/">Contact us</a> with both postcodes, we quote fixed prices for any long-distance domestic removal after survey.
+            </p>
+          </>
+        )}
+      </div>
+
+      <div class="sticky-side">
+        <FormEmbed heading={`Get a quote, ${service.h1}`} />
+        <div class="panel" style="margin-top: 1.5rem;">
+          <h3>Prefer to talk it through?</h3>
+          <p style="color: var(--muted);">
+            Call us any day between 7am and 9pm, we'll give
+            you an honest steer on price and availability in a couple of minutes.
+          </p>
+          <a class="btn btn-navy" href={`tel:${business.phoneE164}`}>
+            <Icon name="phone" /> {business.phoneDisplay}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight surface">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Related services</p>
+        <h2>You might also need</h2>
+      </div>
+      <div class="grid grid-3">
+        {related.map((s) => {
+          const rImg = getServiceImage(s.slug);
+          return (
+            <article class="card">
+              <div class="card-media">
+                <img src={rImg.src} alt={rImg.alt} width="640" height="400" loading="lazy" />
+              </div>
+              <div class="card-body">
+                <h3><a href={`/${s.slug}/`}>{s.h1}</a></h3>
+                <p>{s.short}</p>
+                <span class="card-link">Learn more <Icon name="arrow" /></span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={`Book now, ${service.h1}`} />
+</BaseLayout>

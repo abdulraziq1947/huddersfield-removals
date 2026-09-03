@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { getCollection } from "astro:content";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+
+const guides = await getCollection("guides");
+const path = "/guides/";
+const title = "Moving Guides | Free Advice from Huddersfield Removals";
+const description =
+  "Free, practical moving guides written by a working Huddersfield removals crew, checklists, packing advice, cost savings and local know-how.";
+const crumbs = [{ name: "Guides", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Moving guides"
+    lede="Written by people who move houses for a living, not content farms. Practical, local and free."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container grid grid-3">
+      {guides.map((g) => (
+        <article class="card">
+          <div class="card-body">
+            <h3><a href={`/guides/${g.id}/`}>{g.data.title}</a></h3>
+            <p>{g.data.description}</p>
+            <span class="card-link">Read guide <Icon name="arrow" /></span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+import { business } from "../data/business";
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+
+const year = new Date().getFullYear();
+const footerAreas = [
+  { name: "Huddersfield Town Centre", slug: "huddersfield-town-centre" },
+  { name: "Lindley", slug: "lindley" },
+  { name: "Almondbury", slug: "almondbury" },
+  { name: "Marsh", slug: "marsh" },
+  { name: "Golcar", slug: "golcar" },
+  { name: "Holmfirth", slug: "holmfirth" },
+  { name: "Mirfield", slug: "mirfield" },
+  { name: "Brighouse", slug: "brighouse" },
+];
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="logo" href="/" aria-label="Huddersfield Removals, home">
+          <Logo />
+          <span class="logo-text">
+            <strong>Huddersfield Removals</strong>
+            <span>Moving West Yorkshire</span>
+          </span>
+        </a>
+        <p>
+          {business.address.streetAddress}, {business.address.addressLocality}, {business.address.postalCode}<br />
+          Open {business.hours.label}, seven days a week<br />
+          £50,000 goods-in-transit &amp; £1m public liability cover
+        </p>
+        <a class="footer-phone" href={`tel:${business.phoneE164}`}>{business.phoneDisplay}</a>
+        <div class="footer-social">
+          <a href={business.sameAs[0]} rel="noopener" target="_blank" aria-label="Facebook"><Icon name="facebook" /></a>
+          <a href={business.sameAs[1]} rel="noopener" target="_blank" aria-label="Pinterest"><Icon name="pinterest" /></a>
+        </div>
+      </div>
+
+      <nav aria-label="Services">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="/house-removals-huddersfield/">House Removals</a></li>
+          <li><a href="/office-removals-huddersfield/">Office Removals</a></li>
+          <li><a href="/student-removals-huddersfield/">Student Removals</a></li>
+          <li><a href="/piano-removals/">Piano Removals</a></li>
+          <li><a href="/furniture-removals/">Furniture Removals</a></li>
+          <li><a href="/packing-services/">Packing Services</a></li>
+          <li><a href="/services/">All services →</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Areas">
+        <h4>Areas</h4>
+        <ul>
+          {footerAreas.map((a) => (
+            <li><a href={`/areas/${a.slug}/`}>{a.name}</a></li>
+          ))}
+          <li><a href="/areas/">All 31 areas →</a></li>
+        </ul>
+      </nav>
+
+      <nav aria-label="Company">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about/">About us</a></li>
+          <li><a href="/reviews/">Reviews</a></li>
+          <li><a href="/moving-cost-calculator/">Cost calculator</a></li>
+          <li><a href="/guides/">Moving guides</a></li>
+          <li><a href="/routes/">Long-distance routes</a></li>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© {year} {business.name}. All rights reserved.</span>
+      <span>
+        <a href="/terms-and-conditions/">Terms &amp; Conditions</a> · <a href="/privacy-policy/">Privacy Policy</a>
+      </span>
+    </div>
+  </div>
+</footer>

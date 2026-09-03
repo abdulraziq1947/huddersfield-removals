@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { areas } from "../../data/areas";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+
+const path = "/areas/";
+const title = "Areas We Cover | Removals Across Huddersfield & Kirklees";
+const description =
+  "Huddersfield Removals covers every corner of Huddersfield and Kirklees, 31 local areas from the town centre to Holmfirth, Mirfield and Brighouse, plus UK-wide moves.";
+const crumbs = [{ name: "Areas", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+
+const sorted = [...areas].sort((a, b) => a.name.localeCompare(b.name));
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Areas we cover"
+    lede="From our base on Belmont Close in HD1 we cover every Huddersfield suburb and the surrounding Kirklees towns, and long-distance moves take you anywhere on the UK mainland."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        {sorted.map((a) => (
+          <article class="card">
+            <div class="card-body">
+              <h3><a href={`/areas/${a.slug}/`}><Icon name="pin" style="width:1em;height:1em;vertical-align:-0.12em;color:var(--amber-600);" /> {a.name}</a></h3>
+              <p>House, office and furniture removals in {a.name}, with driving directions from {a.landmark} to our HD1 base.</p>
+              <span class="card-link">View {a.name} <Icon name="arrow" /></span>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="lede mt-2" style="max-width: 46rem;">
+        Don't see your area? We cover the whole of Kirklees and beyond , 
+        <a href="/contact/">get in touch</a> and we'll confirm availability for your postcode.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

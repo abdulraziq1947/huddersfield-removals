@@ -1,0 +1,112 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import FaqList from "../components/FaqList.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const path = "/faq/";
+const title = "FAQ | Huddersfield Removals";
+const description =
+  "Answers to common questions about quotes, insurance, cancellations, what we can and can't move, and how moving day works with Huddersfield Removals.";
+const crumbs = [{ name: "FAQ", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+
+const booking = [
+  {
+    q: "How do I get a quote?",
+    a: "Three ways: call 01484 212450, send the enquiry form, or use the moving cost calculator for an instant guide price. For larger homes we do a quick in-person or video survey, then confirm everything as a fixed written quote valid for 3 months.",
+  },
+  {
+    q: "How far ahead should I book?",
+    a: "Two to three weeks for most moves. End-of-month Fridays and end-of-term weeks in June book earliest. Short-notice moves are often possible midweek, just call.",
+  },
+  {
+    q: "What happens if I need to cancel?",
+    a: "Cancel more than 72 hours before the move and there's no cancellation charge. Within 72 hours, charges apply as set out in our terms, for hourly-rate jobs a two-hour fee, for fixed-price jobs 25% of the agreed price. Deposits are non-refundable.",
+  },
+  {
+    q: "When are you open?",
+    a: `Seven days a week, ${business.hours.label}, including most bank holidays. Weekend rates are the same as weekday rates.`,
+  },
+];
+
+const insurance = [
+  {
+    q: "What insurance covers my move?",
+    a: "£50,000 goods-in-transit cover per vehicle load and £1 million public liability insurance. If your goods are worth more than £50,000 per load, tell us before the move so we can plan appropriately.",
+  },
+  {
+    q: "Are self-packed boxes covered for breakages?",
+    a: "Fragile items are covered when our team packed them professionally. Self-packed boxes are moved with the same care, but breakage inside them isn't claimable, an industry-standard condition. It's the strongest practical argument for our packing service.",
+  },
+  {
+    q: "What if something gets damaged?",
+    a: "Check items with the crew before we leave, damage must be noted at handover, and missing items reported within 24 hours. Genuine damage is compensated or repaired per our terms; items broken beyond use are replaced directly or via insurance.",
+  },
+];
+
+const scope = [
+  {
+    q: "What won't you move?",
+    a: "Hazardous items (gas bottles, paints, aerosols, firearms), perishable food, plants, animals, and high-value portable items like jewellery, money and documents, you should transport those yourself. Full list in our terms and conditions.",
+  },
+  {
+    q: "Do you do waste removal or house clearance?",
+    a: "No. We're a moving company, not a waste carrier, we don't collect rubbish, clear houses, or dispose of unwanted items. Kirklees Council offers a bulky waste collection service for that.",
+  },
+  {
+    q: "Do you do international moves or storage?",
+    a: "No. UK mainland moves only, and we don't operate storage facilities. We'd rather be excellent at a focused service than mediocre at everything.",
+  },
+  {
+    q: "Can you move items from a loft?",
+    a: "Yes, if safe access is provided, a correctly fitted loft ladder and loft flooring, and it's agreed in advance, per our terms.",
+  },
+];
+
+const day = [
+  {
+    q: "What size are your vans?",
+    a: "3.5-tonne Luton vans, the standard for UK home removals. They fit down Huddersfield's terraced streets, don't need an O-licence, and most family homes move in one or two planned loads.",
+  },
+  {
+    q: "Do I need to arrange parking?",
+    a: "Where parking is restricted, a Kirklees Council parking dispensation reserves space for the van. We'll tell you if your street needs one when we survey the move. Unpaid parking fines arising from missing arrangements are chargeable per our terms.",
+  },
+  {
+    q: "Do I need to be there on moving day?",
+    a: "Yes. you (or someone representing you) should be present throughout collection and delivery, per our terms. It protects both sides: you direct where things go, and nothing gets left behind.",
+  },
+  {
+    q: "How should I prepare appliances?",
+    a: "Washing machines, dishwashers and fridge-freezers need to be disconnected, defrosted, clean and dry before we arrive. We move them safely from there.",
+  },
+];
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Frequently asked questions"
+    lede="Straight answers on quotes, insurance, what we do and don't move, and how the day itself works."
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <h2>Quotes &amp; booking</h2>
+      <FaqList items={booking} />
+
+      <h2 class="mt-2">Insurance &amp; protection</h2>
+      <FaqList items={insurance} />
+
+      <h2 class="mt-2">What we do, and don't</h2>
+      <FaqList items={scope} />
+
+      <h2 class="mt-2">Moving day</h2>
+      <FaqList items={day} />
+    </div>
+  </section>
+
+  <CtaBand title="Still got a question?" text={`Call ${business.phoneDisplay} any day ${business.hours.label}, a real person answers, not a menu.`} />
+</BaseLayout>

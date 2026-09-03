@@ -1,0 +1,265 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FormEmbed from "../components/FormEmbed.astro";
+import MapEmbed from "../components/MapEmbed.astro";
+import Icon from "../components/Icon.astro";
+import FaqList from "../components/FaqList.astro";
+import CtaBand from "../components/CtaBand.astro";
+import { business } from "../data/business";
+import { services } from "../data/services";
+import { areas } from "../data/areas";
+import { buildSchemaGraph } from "../lib/schema/graph";
+import { images, getServiceImage } from "../data/images";
+
+const path = "/";
+const title = "Removals Huddersfield | House & Office Removals | Huddersfield Removals";
+const description =
+  `Trusted removal company in Huddersfield rated ${business.rating.value}/5 on Google. House, office, student and piano removals across West Yorkshire. Open 7am–9pm, 7 days. Call 01484 212450.`;
+const schema = buildSchemaGraph({ pageType: "home", path, title, description, breadcrumbs: [], includeRating: true, image: images.hero });
+
+const homeFaqs = [
+  {
+    q: "How much do removals in Huddersfield cost?",
+    a: "Cost depends on volume, access and whether you want packing. Use our moving cost calculator for a guide range, then we confirm a fixed written quote after a survey, in person or from your videos.",
+  },
+  {
+    q: "Are you insured?",
+    a: "Yes. every move carries £50,000 goods-in-transit cover per vehicle load and £1 million public liability insurance, as covered in our terms.",
+  },
+  {
+    q: "Which areas do you cover?",
+    a: "All of Huddersfield and Kirklees, from the town centre to Lindley, Almondbury, Golcar, Holmfirth, Mirfield and Brighouse, plus long-distance moves to anywhere on the UK mainland.",
+  },
+  {
+    q: "Do you do waste removal or house clearance?",
+    a: "No. We are a moving company, not a waste or rubbish clearance service. We move homes, offices, students, pianos and furniture, we don't collect waste, and we don't do international shipping or single-item courier jobs.",
+  },
+  {
+    q: "When are you open?",
+    a: "Seven days a week, 7am to 9pm, including bank holidays. Weekend moves cost the same as weekday moves.",
+  },
+];
+
+const heroChips = [
+  { icon: "shield", text: "£50k goods-in-transit cover" },
+  { icon: "clock", text: "Open 7am–9pm, 7 days" },
+  { icon: "pin", text: "All HD postcodes covered" },
+  { icon: "checkCircle", text: "Fixed written quotes" },
+] as const;
+
+const featuredAreas = areas.slice(0, 18);
+---
+<BaseLayout {title} {description} {path} {schema} ogImage={images.hero.src}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <p class="eyebrow">Huddersfield's local moving company</p>
+        <h1>Removals in Huddersfield done <em>properly</em>, seven days a week</h1>
+        <p class="lede">
+          House, office, student and piano removals across Huddersfield, Kirklees and the whole
+          UK mainland. Fixed written quotes, careful crews, rated {business.rating.value} on Google.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary btn-lg" href={`tel:${business.phoneE164}`}>
+            <Icon name="phone" /> {business.phoneDisplay}
+          </a>
+          <a class="btn btn-ghost btn-lg" href="/moving-cost-calculator/">Get an instant estimate</a>
+        </div>
+        <ul class="hero-chips">
+          {heroChips.map((c) => (
+            <li><Icon name={c.icon} /> {c.text}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="hero-media">
+        <img
+          src={images.hero.src}
+          alt={images.hero.alt}
+          width="1200"
+          height="900"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="hero-card">
+          <span class="score">{business.rating.value}</span>
+          <span>
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <small>Rated on Google</small>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="container stats-grid">
+      <div class="stat"><b>{business.rating.value}/5</b><span>Google rating</span></div>
+      <div class="stat"><b>31</b><span>Areas covered</span></div>
+      <div class="stat"><b>7 days</b><span>Open 7am–9pm all week</span></div>
+      <div class="stat"><b>£50k</b><span>Goods-in-transit cover</span></div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">What we move</p>
+        <h2>Removal services in Huddersfield</h2>
+        <p class="lede">
+          One company for the whole move, from packing the first box to rebuilding the last wardrobe.
+        </p>
+      </div>
+      <div class="grid grid-3">
+        {services.slice(0, 6).map((s) => {
+          const img = getServiceImage(s.slug);
+          return (
+            <article class="card">
+              <div class="card-media">
+                <img src={img.src} alt={img.alt} width="640" height="400" loading="lazy" />
+              </div>
+              <div class="card-body">
+                <h3><a href={`/${s.slug}/`}>{s.h1}</a></h3>
+                <p>{s.short}</p>
+                <span class="card-link">Learn more <Icon name="arrow" /></span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <p class="text-center mt-2">
+        <a class="btn btn-navy" href="/services/">View all 10 services <Icon name="arrow" /></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="section surface">
+    <div class="container split">
+      <div>
+        <p class="eyebrow">Why Huddersfield chooses us</p>
+        <h2>A local firm that treats your move like it matters</h2>
+        <p class="lede">
+          We're based on Belmont Close in HD1 and we move people across these streets every day.
+          No call centres, no subcontracted strangers, the people who quote your move are the
+          people who turn up.
+        </p>
+        <ul class="checklist">
+          <li><Icon name="check" /> <span><strong>Fixed written quotes</strong>, the price we agree is the price you pay.</span></li>
+          <li><Icon name="check" /> <span><strong>Properly insured</strong>, £50,000 goods-in-transit per van load and £1m public liability.</span></li>
+          <li><Icon name="check" /> <span><strong>The right kit</strong>, 3.5-tonne Luton vans suited to Huddersfield's terraced streets, blankets, straps and dollies on every job.</span></li>
+          <li><Icon name="check" /> <span><strong>Seven-day availability</strong>, weekends and evenings at the same rates, 7am–9pm.</span></li>
+          <li><Icon name="check" /> <span><strong>Honest scope</strong>, we're a removals firm, not a waste clearance company. If a job isn't right for us, we'll say so.</span></li>
+        </ul>
+        <a class="btn btn-primary" href="/about/">More about us <Icon name="arrow" /></a>
+      </div>
+      <div class="media-frame sticky-side">
+        <img
+          src={images.fleet.src}
+          alt={images.fleet.alt}
+          width="720"
+          height="540"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">How it works</p>
+        <h2>Three steps from quote to keys</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <h3>Tell us about your move</h3>
+          <p>Call, use the enquiry form, or get an instant guide price from the cost calculator. For larger homes we do a quick in-person or video survey.</p>
+        </div>
+        <div class="step">
+          <h3>Get a fixed written quote</h3>
+          <p>Crew size, van loads, timings and price, all confirmed in writing before you commit. No hourly-rate ambushes on moving day.</p>
+        </div>
+        <div class="step">
+          <h3>Move day, handled</h3>
+          <p>We wrap, load, transport and place everything in the right rooms. You put the kettle on in the new house.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AREAS -->
+  <section class="section surface">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Where we work</p>
+        <h2>Covering every corner of Huddersfield &amp; Kirklees</h2>
+        <p class="lede">
+          Local crews with genuine street knowledge, every area page includes directions from a
+          local landmark to our HD1 base.
+        </p>
+      </div>
+      <ul class="chip-grid">
+        {featuredAreas.map((a) => (
+          <li><a class="chip" href={`/areas/${a.slug}/`}><Icon name="pin" /> {a.name}</a></li>
+        ))}
+        <li><a class="chip" href="/areas/"><strong>All 31 areas →</strong></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">Reviews</p>
+        <h2>Rated {business.rating.value} out of 5 by Huddersfield movers</h2>
+      </div>
+      <div class="review-summary" style="max-width: 40rem; margin-inline: auto;">
+        <span class="score">{business.rating.value}</span>
+        <span>
+          <span class="stars" aria-hidden="true">★★★★★</span><br />
+          Rated <strong>{business.rating.value}/5 on Google</strong><br />
+          <a href={business.hasMap} rel="noopener" target="_blank">Read our reviews on Google →</a>
+        </span>
+      </div>
+      <p class="text-center mt-2">
+        <a class="btn btn-outline" href="/reviews/">See what customers say <Icon name="arrow" /></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section surface">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <FaqList items={homeFaqs} />
+      <p class="mt-2"><a class="card-link" href="/faq/">More questions answered <Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <CtaBand />
+
+  <!-- CONTACT -->
+  <section class="section" id="quote">
+    <div class="container split">
+      <FormEmbed />
+      <div class="sticky-side">
+        <div class="panel">
+          <h3>Find us</h3>
+          <p style="color: var(--muted);">
+            {business.address.streetAddress}, {business.address.addressLocality}, {business.address.postalCode}<br />
+            Open {business.hours.label}, seven days a week
+          </p>
+          <MapEmbed />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { services } from "../../data/services";
+import { business } from "../../data/business";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+import { getServiceImage } from "../../data/images";
+
+const path = "/services/";
+const title = "Removal Services in Huddersfield";
+const description =
+  "All Huddersfield Removals services: house, office, student, piano and furniture removals, packing, dismantling and long-distance moves. Fixed quotes, 7 days a week.";
+const crumbs = [{ name: "Services", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title="Our removal services"
+    lede={`Ten services, one local company. Every job is quoted in writing, insured for £50,000 goods-in-transit, and available seven days a week, ${business.hours.label}.`}
+    crumbs={crumbs}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        {services.map((s) => {
+          const img = getServiceImage(s.slug);
+          return (
+            <article class="card">
+              <div class="card-media">
+                <img src={img.src} alt={img.alt} width="640" height="400" loading="lazy" />
+              </div>
+              <div class="card-body">
+                <h3><a href={`/${s.slug}/`}>{s.h1}</a></h3>
+                <p>{s.short}</p>
+                <span class="card-link">Learn more <Icon name="arrow" /></span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div class="panel mt-2" style="max-width: 46rem;">
+        <h3>What we don't do, on purpose</h3>
+        <p style="color: var(--muted); margin-bottom: 0;">
+          We're a removals company, so we keep our scope honest: <strong>no waste or rubbish
+          clearance, no house clearance, no international shipping, no storage, and no
+          single-item courier jobs</strong>. If your job needs one of those, we'll tell you
+          straight away rather than doing it badly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

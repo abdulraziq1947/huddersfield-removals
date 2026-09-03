@@ -1,0 +1,94 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import FormEmbed from "../../components/FormEmbed.astro";
+import FaqList from "../../components/FaqList.astro";
+import MapEmbed from "../../components/MapEmbed.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import Icon from "../../components/Icon.astro";
+import { routes } from "../../data/routes";
+import { business } from "../../data/business";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+
+export function getStaticPaths() {
+  return routes.map((r) => ({ params: { slug: r.slug }, props: { route: r } }));
+}
+const { route } = Astro.props;
+const destination = route.title.replace("Huddersfield to ", "").replace(" Removals", "");
+const path = `/routes/${route.slug}/`;
+const title = route.title;
+const description = `${route.title}, same crew door to door, roughly ${route.miles} road miles (${route.driveTime}). Fixed written quotes after survey. £50k goods-in-transit cover. Call 01484 212450.`;
+const crumbs = [
+  { name: "Routes", path: "/routes/" },
+  { name: route.title, path },
+];
+const schema = buildSchemaGraph({
+  pageType: "service",
+  path,
+  title,
+  description,
+  breadcrumbs: crumbs,
+  service: { name: route.title, slug: route.slug, description },
+});
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero
+    title={route.title}
+    lede={`Roughly ${route.miles} road miles (${route.driveTime}) from our HD1 base, one crew loads in Huddersfield and unloads in ${destination}, nothing handled twice.`}
+    crumbs={crumbs}
+  >
+    <ul class="hero-chips">
+      <li><Icon name="truck" /> ~{route.miles} road miles</li>
+      <li><Icon name="shield" /> £50k goods-in-transit cover</li>
+      <li><Icon name="checkCircle" /> Fixed quote after survey</li>
+    </ul>
+  </PageHero>
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <h2>Moving from Huddersfield to {destination}</h2>
+        {route.intro.map((p) => <p>{p}</p>)}
+
+        <h2>Route and timing</h2>
+        <p>{route.routeNotes}</p>
+
+        <h2>Driving route from Huddersfield to {destination}</h2>
+        <p style="color: var(--muted);">
+          Approximate driving directions from our HD1 base ({business.address.streetAddress}, {business.address.postalCode}) to {destination}. Your crew takes a similar route on moving day.
+        </p>
+        <MapEmbed mode="directions" destination={route.destinationPlace} destinationLabel={destination} />
+
+        <h2>Preparing for your move</h2>
+        <p>{route.preparation}</p>
+
+        <ul class="checklist">
+          <li><Icon name="check" /> <span>Same crew door to door, no depot transfers</span></li>
+          <li><Icon name="check" /> <span>Early starts where needed to beat peak traffic</span></li>
+          <li><Icon name="check" /> <span>Fixed written price after in-person or video survey</span></li>
+          <li><Icon name="check" /> <span>Packing and dismantling available on any route</span></li>
+          <li><Icon name="check" /> <span>£50,000 goods-in-transit per vehicle load</span></li>
+          <li><Icon name="check" /> <span>£1 million public liability insurance</span></li>
+        </ul>
+
+        <h2>Common questions</h2>
+        <FaqList items={route.faqs} />
+      </div>
+      <div class="sticky-side">
+        <FormEmbed heading={`Quote: Huddersfield to ${destination}`} />
+        <div class="panel" style="margin-top: 1.5rem;">
+          <h3>Guide price first</h3>
+          <p style="color: var(--muted);">
+            Use our <a href="/moving-cost-calculator/">moving cost calculator</a> for a guide range,
+            then send both postcodes for a fixed written quote, usually the same day.
+          </p>
+          <a class="btn btn-navy" href={`tel:${business.phoneE164}`}>
+            <Icon name="phone" /> {business.phoneDisplay}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title={`Book your move to ${destination}`} />
+</BaseLayout>

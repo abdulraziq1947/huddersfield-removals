@@ -1,0 +1,89 @@
+---
+import { business } from "../data/business";
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+
+const navItems = [
+  { href: "/services/", label: "Services" },
+  { href: "/areas/", label: "Areas" },
+  { href: "/moving-cost-calculator/", label: "Calculator" },
+  { href: "/guides/", label: "Guides" },
+  { href: "/reviews/", label: "Reviews" },
+  { href: "/blog/", label: "Blog", hideLg: true },
+  { href: "/contact/", label: "Contact" },
+];
+---
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="topbar-items">
+      <span class="topbar-item">
+        <Icon name="clock" class="topbar-icon" />
+        <span>Open 7am–9pm, 7 days a week</span>
+      </span>
+      <span class="topbar-item topbar-item--hide-sm">
+        <Icon name="star" class="topbar-icon" />
+        <span><span class="stars">★★★★★</span> {business.rating.value}/5 on Google</span>
+      </span>
+    </div>
+    <a class="topbar-item topbar-item--link topbar-item--hide-sm" href={`mailto:${business.email}`}>
+      <Icon name="mail" class="topbar-icon" />
+      <span>{business.email}</span>
+    </a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/" aria-label="Huddersfield Removals, home">
+      <Logo />
+      <span class="logo-text">
+        <strong>Huddersfield Removals</strong>
+        <span>Moving West Yorkshire</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="main-nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        {navItems.map((item) => (
+          <li class:list={["nav-item", { "nav-item--hide-lg": item.hideLg }]}>
+            <a href={item.href} class:list={[{ "is-active": Astro.url.pathname.startsWith(item.href) && item.href !== "/" }]}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <a class="header-phone" href={`tel:${business.phoneE164}`}>
+        <span class="header-phone-icon" aria-hidden="true">
+          <Icon name="phone" />
+        </span>
+        <span class="header-phone-text">
+          <span class="header-phone-label">Call 7 days</span>
+          <span class="header-phone-number">{business.phoneDisplay}</span>
+        </span>
+      </a>
+      <a class="btn btn-quote" href="/contact/">Get a Quote</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-callbar">
+  <a class="btn btn-navy" href={`tel:${business.phoneE164}`}>
+    <Icon name="phone" /> Call now
+  </a>
+  <a class="btn btn-quote" href="/contact/">Free quote</a>
+</div>
+
+<script>
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.getElementById("main-nav");
+  toggle?.addEventListener("click", () => {
+    const open = nav?.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(!!open));
+  });
+</script>

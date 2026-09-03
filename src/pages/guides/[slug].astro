@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import CtaBand from "../../components/CtaBand.astro";
+import { getCollection, render } from "astro:content";
+import { buildSchemaGraph } from "../../lib/schema/graph";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("guides");
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const path = `/guides/${entry.id}/`;
+const title = entry.data.title;
+const description = entry.data.description;
+const crumbs = [
+  { name: "Guides", path: "/guides/" },
+  { name: title, path },
+];
+const schema = buildSchemaGraph({
+  pageType: "article",
+  path,
+  title,
+  description,
+  breadcrumbs: crumbs,
+  article: { headline: title, datePublished: "2026-09-01" },
+});
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero title={title} lede={description} crumbs={crumbs} />
+  <section class="section">
+    <article class="container prose">
+      <Content />
+    </article>
+  </section>
+  <CtaBand />
+</BaseLayout>

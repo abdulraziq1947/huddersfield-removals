@@ -1,0 +1,89 @@
+Use this data to optimize the following content:
+
+## Entities
+
+Huddersfield Town A.F.C., University of Huddersfield, Kirklees, Yorkshire, England, Huddersfield railway station, Huddersfield Canal, Castle Hill, Victoria Tower, Huddersfield Giants, John Smith's Stadium, Huddersfield Art Gallery, Huddersfield Choral Society, Huddersfield Narrow Canal, Huddersfield Bus Station, Huddersfield New College, Huddersfield Royal Infirmary, Huddersfield Examiner, Huddersfield Literature Festival, Huddersfield Food and Drink Festival
+
+### People
+Harold Wilson, Patrick Stewart, Zayn Malik
+
+### Organizations
+Huddersfield Town A.F.C., University of Huddersfield, Huddersfield Giants, Huddersfield Choral Society, Huddersfield New College
+
+### Concepts
+Textile industry, Industrial Revolution, Rugby league, Football, Higher education
+
+### Products
+Huddersfield Town merchandise, Huddersfield Giants merchandise, Huddersfield ale, Huddersfield honey
+
+### Locations
+Kirklees, Yorkshire, England, Huddersfield railway station, Castle Hill, Victoria Tower, John Smith's Stadium, Huddersfield Canal, Huddersfield Art Gallery, Huddersfield Royal Infirmary
+
+## N-Grams
+
+### 2-Grams
+huddersfield town, huddersfield university, huddersfield weather, huddersfield news, huddersfield map, huddersfield postcode, huddersfield train station, huddersfield to leeds, huddersfield to manchester, huddersfield to london, huddersfield population, huddersfield history, huddersfield market, huddersfield jobs, huddersfield hotels
+
+### 3-Grams
+huddersfield town centre, huddersfield university uk, huddersfield weather forecast, huddersfield news today, huddersfield train station parking, huddersfield to manchester airport, huddersfield to leeds train, huddersfield to london kings cross, huddersfield population 2023, huddersfield history museum, huddersfield market opening times, huddersfield jobs vacancies, huddersfield hotels city centre, huddersfield postcode list, huddersfield map of area
+
+### 4-Grams
+huddersfield town centre shops, huddersfield university accommodation, huddersfield weather forecast 14 days, huddersfield news latest headlines, huddersfield train station to town centre, huddersfield to manchester airport train, huddersfield to leeds train times, huddersfield to london st pancras, huddersfield population 2023 estimate, huddersfield history museum opening times, huddersfield market opening times today, huddersfield jobs vacancies full time, huddersfield hotels with parking, huddersfield postcode for sat nav, huddersfield map of city centre
+
+## NLP Keywords
+
+### Primary Keywords
+huddersfield, huddersfield town, huddersfield university, huddersfield news, huddersfield events, huddersfield map, huddersfield weather, huddersfield jobs, huddersfield shopping, huddersfield restaurants, huddersfield hotels, huddersfield history, huddersfield transport, huddersfield population, huddersfield things to do
+
+### Secondary Keywords
+things to do in huddersfield, huddersfield town centre, huddersfield accommodation, huddersfield nightlife, huddersfield property for sale, huddersfield council, huddersfield canal, huddersfield railway station, huddersfield bus station, huddersfield parking, huddersfield schools, huddersfield colleges, huddersfield sports, huddersfield football club, huddersfield rugby league
+
+### LSI Keywords
+west yorkshire, kirklees, yorkshire, university of huddersfield, huddersfield giants, huddersfield town fc, castle hill, victoria tower, greenhead park, huddersfield narrow canal, standedge tunnel, lindley, marsh, almondbury, huddersfield choral society
+
+## Grammar
+
+### Proper Nouns
+Huddersfield Town F.C., University of Huddersfield, Huddersfield railway station, Huddersfield Narrow Canal, Huddersfield Giants, Huddersfield Choral Society, Huddersfield Art Gallery, Huddersfield bus station
+
+### Common Nouns
+town, city, settlement, district, borough, place, location, community
+
+### Synonyms
+Huddersfield town, Huddersfield area, Huddersfield region, Huddersfield locality
+
+### Hyponyms
+Huddersfield Town Centre, Huddersfield suburb, Huddersfield ward, Huddersfield postcode area, Huddersfield parliamentary constituency
+
+### Hypernyms
+town in West Yorkshire, town in England, town in the United Kingdom, urban area, settlement in Kirklees, place in Yorkshire
+
+### Meronyms
+Huddersfield town centre, Huddersfield suburbs, Huddersfield parks, Huddersfield buildings, Huddersfield streets, Huddersfield landmarks
+
+### Holonyms
+West Yorkshire, Kirklees, Yorkshire, England, United Kingdom
+
+## Unique N-Grams
+
+### Informational
+what is huddersfield famous for, history of huddersfield england, huddersfield population 2024, huddersfield postcode area, is huddersfield in yorkshire, huddersfield vs leeds which is better, huddersfield accent dialect, huddersfield industrial revolution, best places to visit in huddersfield, huddersfield landmarks and monuments, huddersfield culture and arts, huddersfield transport links
+
+### Commercial
+huddersfield town tickets, huddersfield university courses, huddersfield hotels deals, huddersfield property for sale, huddersfield restaurants booking, huddersfield shopping centres, huddersfield gym memberships, huddersfield car dealerships, huddersfield estate agents, huddersfield plumbers, huddersfield electricians, huddersfield solicitors
+
+### Long-tail
+huddersfield town fixtures 2024/25, huddersfield university open days 2024, huddersfield weather forecast hourly today, huddersfield to london train direct, huddersfield canal walk with dog, huddersfield market antiques on sunday, huddersfield history of the luddites, huddersfield events for families this weekend, huddersfield jobs in healthcare sector, huddersfield restaurants halal certified, huddersfield to manchester airport bus, huddersfield student accommodation private
+
+### Authority-Building
+huddersfield town official website, huddersfield university official, huddersfield council planning, huddersfield nhs trust, huddersfield police station, huddersfield fire station, huddersfield library services, huddersfield civic society, huddersfield chamber of commerce, huddersfield tourism board, huddersfield transport authority, huddersfield jobcentre
+
+## Skip-Gram Words
+
+### Word Sense Disambiguation
+**Town in West Yorkshire, England**: town, West Yorkshire, England, university, rugby league, canal
+**University of Huddersfield**: university, higher education, students, campus, research
+**Huddersfield Town A.F.C.**: football club, soccer, league, stadium, supporters
+
+### Keyword Extraction
+Huddersfield, West Yorkshire, town, university, football club, rugby league, canal, education, sports

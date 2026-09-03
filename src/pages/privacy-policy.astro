@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const path = "/privacy-policy/";
+const title = "Privacy Policy";
+const description = "How Huddersfield Removals collects, uses and protects your personal data when you enquire or book a move.";
+const crumbs = [{ name: "Privacy Policy", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero title="Privacy Policy" lede="How we handle your data, plainly stated." crumbs={crumbs} />
+  <section class="section">
+    <div class="container prose">
+      <h2>Who we are</h2>
+      <p>
+        {business.name}, {business.address.streetAddress}, {business.address.addressLocality},
+        {business.address.postalCode}. Contact: <a href={`mailto:${business.email}`}>{business.email}</a>
+        or {business.phoneDisplay}.
+      </p>
+
+      <h2>What we collect and why</h2>
+      <ul>
+        <li><strong>Enquiry details</strong>, name, phone, email and move details you submit through our enquiry form or by phone. Used solely to prepare quotes and deliver the removals service you've asked about.</li>
+        <li><strong>Booking information</strong>, addresses, access notes and inventory details needed to carry out your move and meet our contractual obligations.</li>
+      </ul>
+
+      <h2>How your data is processed</h2>
+      <p>
+        Enquiry form submissions are processed by our booking system (removals-crm.com), which acts
+        as a data processor on our behalf. Map embeds on this site are provided by Google Maps and
+        load only after you choose to activate them.
+      </p>
+
+      <h2>What we don't do</h2>
+      <ul>
+        <li>We don't sell or rent your personal data to anyone.</li>
+        <li>We don't send marketing you haven't asked for.</li>
+        <li>We don't collect data this site doesn't need to function.</li>
+      </ul>
+
+      <h2>Retention</h2>
+      <p>
+        Quote and booking records are retained for as long as needed to deliver the service and meet
+        legal and insurance obligations, then deleted.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Under UK GDPR you can request access to, correction of, or deletion of your personal data at
+        any time, email <a href={`mailto:${business.email}`}>{business.email}</a>. If you're
+        unhappy with how we've handled your data, you can complain to the
+        <a href="https://ico.org.uk/" rel="noopener" target="_blank">Information Commissioner's Office</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

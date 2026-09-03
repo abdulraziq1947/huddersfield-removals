@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const path = "/404/";
+const title = "Page not found";
+const description = "The page you requested could not be found, but the movers are still here.";
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: [] });
+---
+<BaseLayout {title} {description} path="/404/" {schema}>
+  <section class="section">
+    <div class="container text-center" style="max-width: 38rem;">
+      <p class="eyebrow" style="justify-content: center;">Error 404</p>
+      <h1>This page moved without telling us</h1>
+      <p class="lede">
+        Ironic, we know. The page you're after doesn't exist, it may have been moved or retired
+        when we rebuilt the site.
+      </p>
+      <div class="hero-ctas" style="justify-content: center;">
+        <a class="btn btn-primary" href="/">Back to the homepage</a>
+        <a class="btn btn-outline" href="/services/">Browse services</a>
+      </div>
+      <p style="color: var(--muted);">
+        Or just call us: <a href={`tel:${business.phoneE164}`}><strong>{business.phoneDisplay}</strong></a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
