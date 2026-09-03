@@ -1,5 +1,4 @@
-﻿# --- Legacy WordPress pages ---
-/contact-us/ /contact/ 301
+﻿/contact-us/ /contact/ 301
 /about-us/ /about/ 301
 /house-removals/ /house-removals-huddersfield/ 301
 /office-removals/ /office-removals-huddersfield/ 301
@@ -11,8 +10,6 @@
 /international-removals-huddersfield/ /long-distance-removals/ 301
 /about-huddersfield/ /areas/ 301
 /wp-content/* / 301
-
-# --- Migrated blog posts: old root permalinks -> /blog/ ---
 /how-much-does-it-cost-to-hire-a-huddersfield-removals-company/ /blog/how-much-does-it-cost-to-hire-a-huddersfield-removals-company/ 301
 /10-cheap-removals-tips-save-money-when-moving-house-in-huddersfield/ /blog/10-cheap-removals-tips-save-money-when-moving-house-in-huddersfield/ 301
 /easy-tips-for-moving-your-fridge/ /blog/easy-tips-for-moving-your-fridge/ 301
@@ -29,8 +26,6 @@
 /tips-for-moving-on-a-budget/ /blog/tips-for-moving-on-a-budget/ 301
 /top-5-things-likely-to-get-damaged-during-home-removals/ /blog/top-5-things-likely-to-get-damaged-during-home-removals/ 301
 /what-to-pack-first-during-huddersfield-removals/ /blog/what-to-pack-first-during-huddersfield-removals/ 301
-
-# --- Retired off-topic listicles -> nearest relevant page ---
 /best-three-dessert-shops-in-huddersfield-for-the-ultimate-dessert-treats/ /guides/moving-house-checklist/ 301
 /best-three-picks-for-burger-takeaway-joints-in-huddersfield-2020/ /guides/ 301
 /a-guide-to-the-three-best-taxi-firms-in-huddersfield-for-travellers/ /guides/ 301
