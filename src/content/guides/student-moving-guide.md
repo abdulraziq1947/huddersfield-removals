@@ -2,7 +2,6 @@
 title: "Student Moving Guide"
 description: "Complete guide to University of Huddersfield student moves, term-time packing, halls-to-house relocations and insured transport across Kirklees."
 ---
-# Student Moving Guide
 
 University of Huddersfield students moving between halls, shared houses and family homes should start planning two to three weeks before term ends: declutter what you will not need next year, gather packing materials, book a removal quote after a quick video survey, label boxes by room, and arrange loading and unloading access at both addresses. Professional removal with goods in transit insurance protects laptops, TVs and kitchen equipment better than cramming everything into a car or hiring an uninsured van.
 

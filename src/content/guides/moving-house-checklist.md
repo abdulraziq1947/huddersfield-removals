@@ -2,7 +2,6 @@
 title: "Moving House Checklist for Huddersfield"
 description: "A practical moving house checklist for Kirklees and West Yorkshire, from eight weeks out to moving day, with packing, surveys and insured transport."
 ---
-# Moving House Checklist for Huddersfield
 
 A moving house checklist for Huddersfield and Kirklees should cover eight weeks of preparation: confirm your completion date, book a removal company after an in-person or video survey, declutter room by room, notify utilities and the council, pack non-essentials early, arrange dismantling and reassembly for large furniture, and plan loading and unloading access at both addresses. On moving day, keep documents, keys and a first-night box separate while your removal team handles goods in transit under proper insurance cover.
 

@@ -2,7 +2,6 @@
 title: "Moving with Pets in Kirklees"
 description: "Reduce pet stress on moving day in Kirklees, planning, packing pet essentials, travel safety and coordinating with your removal company."
 ---
-# Moving with Pets in Kirklees
 
 Moving with pets in Kirklees requires planning your pet's safety separately from the furniture move: update microchip and vet details, pack a pet essentials bag (food, water, bowls, medication, bedding, lead and carrier), arrange for pets to stay away from the property during loading and unloading, transport cats in secure carriers and dogs on harnesses in the car, and register with a new vet in Kirklees or West Yorkshire before moving day. Keeping pets out of the way during dismantling and reassembly protects them from open doors, heavy furniture and stressed behaviour.
 

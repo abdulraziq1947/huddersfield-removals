@@ -2,7 +2,6 @@
 title: "How to Pack Fragile Items"
 description: "Step-by-step guidance on packing fragile items for house moves, glass, china, electronics and artwork, with the right materials and professional tips."
 ---
-# How to Pack Fragile Items
 
 To pack fragile items safely for a house move, wrap each piece individually in packing paper or bubble wrap, cushion boxes with scrunched paper at the bottom and top, pack plates vertically like records rather than flat, fill all gaps so nothing shifts during loading and unloading, and label every box "FRAGILE" with the room destination. Glass, electronics, mirrors and artwork need extra layers and rigid outer cartons; professional packers use specialist packing materials and techniques to protect goods in transit.
 

@@ -2,7 +2,6 @@
 title: "Office Relocation Planning"
 description: "Plan office relocations across Kirklees with minimal downtime, surveys, IT handling, packing materials and insured commercial loading and unloading."
 ---
-# Office Relocation Planning
 
 Office relocation planning should begin eight to twelve weeks before move day: appoint a move coordinator, book a commercial removal survey (in-person or video), audit furniture and equipment, plan IT disconnection and reconnection, communicate with staff, and schedule loading and unloading outside core business hours where possible. A fixed quote after survey covers dismantling and reassembly of workstations, proper packing materials for equipment, and goods in transit insurance for everything on the van.
 

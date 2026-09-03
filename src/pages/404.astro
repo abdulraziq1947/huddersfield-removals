@@ -9,7 +9,7 @@ const title = "Page not found";
 const description = "The page you requested could not be found, but the movers are still here.";
 const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: [] });
 ---
-<BaseLayout {title} {description} path="/404/" {schema}>
+<BaseLayout {title} {description} path="/404/" {schema} noindex>
   <section class="section">
     <div class="container text-center" style="max-width: 38rem;">
       <p class="eyebrow" style="justify-content: center;">Error 404</p>
