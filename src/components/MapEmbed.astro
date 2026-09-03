@@ -1,29 +1,14 @@
 ﻿---
 import Icon from "./Icon.astro";
+import { getMapEmbed, type MapEmbedId } from "../data/map-embeds";
 
 interface Props {
-  origin?: string;
-  originLabel?: string;
-  destination?: string;
-  destinationLabel?: string;
-  mode?: "place" | "directions";
+  embedId?: MapEmbedId;
+  label?: string;
 }
-const { origin, originLabel, destination, destinationLabel, mode = "place" } = Astro.props;
-const key = import.meta.env.PUBLIC_GOOGLE_MAPS_EMBED_KEY;
-const businessAddress = "Flat 18b Belmont Cl, Huddersfield HD1 5DA";
-const dest = "Flat+18b+Belmont+Cl,+Huddersfield+HD1+5DA";
-let src = `https://www.google.com/maps/embed/v1/place?key=${key}&q=${dest}`;
-let label = "Show our location on Google Maps";
-if (mode === "directions" && destination) {
-  const from = origin ?? businessAddress;
-  src = `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(destination)}&mode=driving`;
-  label = destinationLabel
-    ? `Show driving route from Huddersfield to ${destinationLabel}`
-    : "Show driving directions";
-} else if (mode === "directions" && origin) {
-  src = `https://www.google.com/maps/embed/v1/directions?key=${key}&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(businessAddress)}&mode=driving`;
-  label = originLabel ? `Show route from ${originLabel}` : "Show driving directions";
-}
+
+const { embedId = "office-place", label = "Show our location on Google Maps" } = Astro.props;
+const src = getMapEmbed(embedId);
 ---
 <div class="map-facade" data-map-src={src}>
   <button type="button" data-load-map>
@@ -42,7 +27,7 @@ if (mode === "directions" && destination) {
       iframe.src = src;
       iframe.title = "Google Map";
       iframe.loading = "lazy";
-      iframe.referrerPolicy = "no-referrer-when-downgrade";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
       iframe.allowFullscreen = true;
       wrap.replaceChildren(iframe);
     });

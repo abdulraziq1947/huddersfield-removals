@@ -11,6 +11,7 @@ import { areaContent } from "../../data/area-content";
 import { business } from "../../data/business";
 import { services } from "../../data/services";
 import { buildSchemaGraph } from "../../lib/schema/graph";
+import { areaEmbedId } from "../../data/map-embeds";
 import { images } from "../../data/images";
 
 export function getStaticPaths() {
@@ -21,7 +22,6 @@ const { area } = Astro.props;
 const path = `/areas/${area.slug}/`;
 const title = `Removals ${area.name} | House & Office Moves`;
 const description = `Local removal company serving ${area.name}, Huddersfield. House, office, student and furniture moves with £50k goods-in-transit cover. Open 7 days, 7am–9pm. Call 01484 212450.`;
-const origin = `${area.latitude},${area.longitude}`;
 const crumbs = [
   { name: "Areas", path: "/areas/" },
   { name: area.name, path },
@@ -103,7 +103,7 @@ const topServices = services.slice(0, 6);
         <p style="color: var(--muted);">
           Driving route from {area.landmark} in {area.name} to our base at {business.address.streetAddress}, {business.address.postalCode}.
         </p>
-        <MapEmbed mode="directions" origin={origin} originLabel={area.landmark} />
+        <MapEmbed embedId={areaEmbedId(area.slug)} label={`Show route from ${area.landmark}`} />
       </div>
 
       <div class="sticky-side">

@@ -9,6 +9,7 @@ import Icon from "../../components/Icon.astro";
 import { routes } from "../../data/routes";
 import { business } from "../../data/business";
 import { buildSchemaGraph } from "../../lib/schema/graph";
+import { routeEmbedId } from "../../data/map-embeds";
 
 export function getStaticPaths() {
   return routes.map((r) => ({ params: { slug: r.slug }, props: { route: r } }));
@@ -57,7 +58,7 @@ const schema = buildSchemaGraph({
         <p style="color: var(--muted);">
           Approximate driving directions from our HD1 base ({business.address.streetAddress}, {business.address.postalCode}) to {destination}. Your crew takes a similar route on moving day.
         </p>
-        <MapEmbed mode="directions" destination={route.destinationPlace} destinationLabel={destination} />
+        <MapEmbed embedId={routeEmbedId(route.slug)} label={`Show driving route from Huddersfield to ${destination}`} />
 
         <h2>Preparing for your move</h2>
         <p>{route.preparation}</p>

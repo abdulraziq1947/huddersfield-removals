@@ -1,6 +1,5 @@
 /// <reference types="astro/client" />
 interface ImportMetaEnv {
-  readonly PUBLIC_GOOGLE_MAPS_EMBED_KEY: string;
   readonly PUBLIC_SITE_URL: string;
 }
 interface ImportMeta {

@@ -11,6 +11,7 @@ import { routes } from "../data/routes";
 import { business } from "../data/business";
 import { buildSchemaGraph } from "../lib/schema/graph";
 import { getServiceImage } from "../data/images";
+import { routeEmbedId } from "../data/map-embeds";
 
 export function getStaticPaths() {
   return services.map((s) => ({ params: { serviceSlug: s.slug }, props: { service: s } }));
@@ -85,7 +86,7 @@ const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
                     <a href={`/routes/${route.slug}/`}>Huddersfield to {dest}</a>
                     <span style="font-weight: 500; color: var(--muted); font-size: 0.95rem;">, ~{route.miles} miles, {route.driveTime}</span>
                   </h3>
-                  <MapEmbed mode="directions" destination={route.destinationPlace} destinationLabel={dest} />
+                  <MapEmbed embedId={routeEmbedId(route.slug)} label={`Show driving route from Huddersfield to ${dest}`} />
                 </div>
               );
             })}
