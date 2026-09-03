@@ -11,7 +11,6 @@ const title = "FAQ | Huddersfield Removals";
 const description =
   "Answers to common questions about quotes, insurance, cancellations, what we can and can't move, and how moving day works with Huddersfield Removals.";
 const crumbs = [{ name: "FAQ", path }];
-const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
 
 const booking = [
   {
@@ -84,6 +83,9 @@ const day = [
     a: "Washing machines, dishwashers and fridge-freezers need to be disconnected, defrosted, clean and dry before we arrive. We move them safely from there.",
   },
 ];
+// Collect all FAQ groups for FAQPage schema (AI citation value per skill: 3.2x more likely in AI Overviews)
+const allFaqs = [...booking, ...insurance, ...scope, ...day];
+const schema = buildSchemaGraph({ pageType: "faq", path, title, description, breadcrumbs: crumbs, faqs: allFaqs });
 ---
 <BaseLayout {title} {description} {path} {schema}>
   <PageHero

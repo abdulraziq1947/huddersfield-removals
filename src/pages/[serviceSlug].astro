@@ -33,6 +33,7 @@ const schema = buildSchemaGraph({
   breadcrumbs: crumbs,
   service: { name: service.h1, slug: service.slug, description: service.short },
   image: img,
+  faqs: service.faqs,
 });
 const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 ---

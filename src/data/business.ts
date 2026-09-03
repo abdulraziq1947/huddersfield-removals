@@ -16,7 +16,7 @@ export const business = {
   geo: { latitude: 53.6503102, longitude: -1.7884584 },
   gmbCid: "2827560049856438817",
   hours: { opens: "07:00", closes: "21:00", label: "7am–9pm", days: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"] },
-  rating: { value: 4.8 },
+  rating: { value: 4.8, count: 106 },
   insurance: { goodsInTransit: "50000", publicLiability: "1000000", goodsLabel: "£50k GIT", liabilityLabel: "£1m PL" },
   fleet: { licence: "No O-licence", vehicles: "3.5-tonne Luton vans" },
   servicesNotOffered: ["waste or rubbish clearance","international removals","single-item courier moves","storage","man-and-van only services"],
