@@ -1,8 +1,8 @@
 ---
 /**
  * UK PECR cookie consent banner.
- * Equal-weight Accept / Reject; functional third-party embeds stay off until accepted
- * (or until the user explicitly loads a map/form).
+ * Equal-weight Accept / Reject for optional Google Maps.
+ * Colours follow each site theme via CSS variables.
  */
 interface Props {
   cookiePolicyPath?: string;
@@ -53,15 +53,22 @@ const { cookiePolicyPath = "/cookie-policy/" } = Astro.props;
     display: none !important;
   }
   .cookie-consent__panel {
+    --cc-bg: var(--color-dark, var(--navy-900, #12314e));
+    --cc-fg: #fff;
+    --cc-muted: rgb(255 255 255 / 0.84);
+    --cc-accept-bg: var(--color-cta, var(--amber, var(--color-brand, #fff)));
+    --cc-accept-fg: var(--color-cta-ink, var(--navy-950, var(--color-dark, #0b2540)));
+    --cc-accept-hover: var(--color-cta-600, var(--amber-600, var(--color-brand-600, #e8eef5)));
+    --cc-radius: var(--radius-btn, var(--radius, 12px));
     pointer-events: auto;
     max-width: 52rem;
     margin-inline: auto;
     display: grid;
     gap: 1rem;
     padding: 1.1rem 1.25rem;
-    border-radius: 16px;
-    background: #0b2540;
-    color: #fff;
+    border-radius: calc(var(--cc-radius) + 4px);
+    background: var(--cc-bg);
+    color: var(--cc-fg);
     box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.45);
     border: 1px solid rgb(255 255 255 / 0.12);
   }
@@ -73,19 +80,19 @@ const { cookiePolicyPath = "/cookie-policy/" } = Astro.props;
   }
   .cookie-consent__title {
     margin: 0 0 0.35rem;
-    font-family: var(--font-heading, inherit);
+    font-family: var(--font-heading, var(--font, inherit));
     font-weight: 700;
     font-size: 1.05rem;
-    color: #fff;
+    color: var(--cc-fg);
   }
   .cookie-consent__text {
     margin: 0;
     font-size: 0.92rem;
     line-height: 1.45;
-    color: rgb(255 255 255 / 0.82);
+    color: var(--cc-muted);
   }
   .cookie-consent__text a {
-    color: #fff;
+    color: var(--cc-fg);
     text-decoration: underline;
     text-underline-offset: 2px;
   }
@@ -98,7 +105,7 @@ const { cookiePolicyPath = "/cookie-policy/" } = Astro.props;
     flex: 1 1 8rem;
     min-height: 2.75rem;
     padding: 0.65rem 1rem;
-    border-radius: 12px;
+    border-radius: var(--cc-radius);
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
@@ -106,7 +113,7 @@ const { cookiePolicyPath = "/cookie-policy/" } = Astro.props;
   }
   .cookie-consent__btn--reject {
     background: transparent;
-    color: #fff;
+    color: var(--cc-fg);
     border-color: rgb(255 255 255 / 0.45);
   }
   .cookie-consent__btn--reject:hover,
@@ -114,12 +121,13 @@ const { cookiePolicyPath = "/cookie-policy/" } = Astro.props;
     background: rgb(255 255 255 / 0.1);
   }
   .cookie-consent__btn--accept {
-    background: #fff;
-    color: #0b2540;
+    background: var(--cc-accept-bg);
+    color: var(--cc-accept-fg);
   }
   .cookie-consent__btn--accept:hover,
   .cookie-consent__btn--accept:focus-visible {
-    background: #e8eef5;
+    background: var(--cc-accept-hover);
+    color: var(--cc-accept-fg);
   }
   @media (max-width: 1023px) {
     .cookie-consent {
