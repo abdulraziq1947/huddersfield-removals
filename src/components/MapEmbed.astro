@@ -1,4 +1,4 @@
-﻿---
+---
 import Icon from "./Icon.astro";
 import { getMapEmbed, type MapEmbedId } from "../data/map-embeds";
 
@@ -10,26 +10,45 @@ interface Props {
 const { embedId = "office-place", label = "Show our location on Google Maps" } = Astro.props;
 const src = getMapEmbed(embedId);
 ---
-<div class="map-facade" data-map-src={src}>
+<div class="map-facade" data-map-embed data-map-src={src}>
   <button type="button" data-load-map>
     <Icon name="pin" />
     {label}
-    <small>Tap to load the interactive map</small>
+    <small>Optional  -  Google Maps may set cookies</small>
   </button>
 </div>
 <script>
+  import { hasFunctionalConsent, writeConsent, CONSENT_EVENT } from "../scripts/consent";
+
+  function loadMap(wrap: Element) {
+    if (wrap.getAttribute("data-map-loaded") === "1") return;
+    const src = wrap.getAttribute("data-map-src");
+    if (!src) return;
+    const iframe = document.createElement("iframe");
+    iframe.src = src;
+    iframe.title = "Google Map";
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allowFullscreen = true;
+    wrap.replaceChildren(iframe);
+    wrap.setAttribute("data-map-loaded", "1");
+  }
+
+  function sync() {
+    document.querySelectorAll("[data-map-embed]").forEach((wrap) => {
+      if (hasFunctionalConsent()) loadMap(wrap);
+    });
+  }
+
   document.querySelectorAll("[data-load-map]").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const wrap = btn.closest(".map-facade");
-      const src = wrap?.getAttribute("data-map-src");
-      if (!src || !wrap) return;
-      const iframe = document.createElement("iframe");
-      iframe.src = src;
-      iframe.title = "Google Map";
-      iframe.loading = "lazy";
-      iframe.referrerPolicy = "strict-origin-when-cross-origin";
-      iframe.allowFullscreen = true;
-      wrap.replaceChildren(iframe);
+      const wrap = btn.closest("[data-map-embed]");
+      if (!wrap) return;
+      if (!hasFunctionalConsent()) writeConsent(true);
+      loadMap(wrap);
     });
   });
+
+  sync();
+  window.addEventListener(CONSENT_EVENT, sync);
 </script>

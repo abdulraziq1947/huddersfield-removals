@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import { business } from "../data/business";
+import { buildSchemaGraph } from "../lib/schema/graph";
+
+const path = "/cookie-policy/";
+const title = "Cookie Policy | Huddersfield Removals";
+const description = "How Huddersfield Removals uses cookies and similar technologies under UK PECR and UK GDPR.";
+const crumbs = [{ name: "Cookie Policy", path }];
+const schema = buildSchemaGraph({ pageType: "webpage", path, title, description, breadcrumbs: crumbs });
+---
+<BaseLayout {title} {description} {path} {schema}>
+  <PageHero title="Cookie Policy" lede="Your choices under UK PECR and UK GDPR." crumbs={crumbs} />
+  <section class="section">
+    <div class="container prose">
+      <p>This policy explains how {business.name} uses cookies and similar technologies. Read it with our <a href="/privacy-policy/">privacy policy</a>.</p>
+      <p>UK PECR and UK GDPR require consent before non-essential cookies or similar technologies are used.</p>
+
+      <h2>Your choice</h2>
+      <p>We ask whether you accept optional functional tools. You can accept or reject them, and change your mind using Cookie settings in the footer. Your choice is stored in local storage on your device.</p>
+
+      <h2>Essential storage</h2>
+      <ul>
+        <li><strong>Cookie consent choice</strong>  -  remembers accept or reject.</li>
+      </ul>
+
+      <h2>Optional functional tools</h2>
+      <ul>
+        <li><strong>Google Maps</strong>  -  interactive maps load only after you choose to show them (or accept optional tools). Google may set cookies; see <a href="https://policies.google.com/technologies/cookies" rel="noopener">Google's cookie information</a>.</li>
+        <li><strong>Quote form (Removals CRM)</strong>  -  loads from removals-crm.com only after consent or an explicit load. It may use cookies or local storage to operate.</li>
+      </ul>
+
+      <h2>What we do not use</h2>
+      <p>We do not set advertising or analytics cookies on this website.</p>
+
+      <h2>More information</h2>
+      <p>See the <a href="https://ico.org.uk/for-the-public/online/cookies/" rel="noopener">ICO cookies guidance</a>. Prefer to talk? Call <a href={`tel:${business.phoneE164}`}>{business.phoneDisplay}</a>.</p>
+    </div>
+  </section>
+</BaseLayout>

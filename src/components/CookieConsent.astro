@@ -1,0 +1,156 @@
+---
+/**
+ * UK PECR cookie consent banner.
+ * Equal-weight Accept / Reject; functional third-party embeds stay off until accepted
+ * (or until the user explicitly loads a map/form).
+ */
+interface Props {
+  cookiePolicyPath?: string;
+}
+const { cookiePolicyPath = "/cookie-policy/" } = Astro.props;
+---
+
+<div
+  id="cookie-consent"
+  class="cookie-consent"
+  role="dialog"
+  aria-modal="false"
+  aria-labelledby="cookie-consent-title"
+  aria-describedby="cookie-consent-desc"
+  hidden
+>
+  <div class="cookie-consent__panel">
+    <div class="cookie-consent__copy">
+      <p id="cookie-consent-title" class="cookie-consent__title">Cookies and privacy</p>
+      <p id="cookie-consent-desc" class="cookie-consent__text">
+        We use essential storage so the site works (for example remembering checklist ticks and your cookie choice).
+        Optional functional tools  -  Google Maps and our quote form  -  may set cookies or similar technologies from those providers.
+        You can accept or reject them. See our
+        <a href={cookiePolicyPath}>cookie policy</a>.
+      </p>
+    </div>
+    <div class="cookie-consent__actions">
+      <button type="button" class="cookie-consent__btn cookie-consent__btn--reject" data-consent="reject">
+        Reject optional
+      </button>
+      <button type="button" class="cookie-consent__btn cookie-consent__btn--accept" data-consent="accept">
+        Accept optional
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 90;
+    padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    pointer-events: none;
+  }
+  .cookie-consent[hidden] {
+    display: none !important;
+  }
+  .cookie-consent__panel {
+    pointer-events: auto;
+    max-width: 52rem;
+    margin-inline: auto;
+    display: grid;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 16px;
+    background: #0b2540;
+    color: #fff;
+    box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.45);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+  @media (min-width: 720px) {
+    .cookie-consent__panel {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+  }
+  .cookie-consent__title {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading, inherit);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #fff;
+  }
+  .cookie-consent__text {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 0.82);
+  }
+  .cookie-consent__text a {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cookie-consent__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .cookie-consent__btn {
+    flex: 1 1 8rem;
+    min-height: 2.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .cookie-consent__btn--reject {
+    background: transparent;
+    color: #fff;
+    border-color: rgb(255 255 255 / 0.45);
+  }
+  .cookie-consent__btn--reject:hover,
+  .cookie-consent__btn--reject:focus-visible {
+    background: rgb(255 255 255 / 0.1);
+  }
+  .cookie-consent__btn--accept {
+    background: #fff;
+    color: #0b2540;
+  }
+  .cookie-consent__btn--accept:hover,
+  .cookie-consent__btn--accept:focus-visible {
+    background: #e8eef5;
+  }
+  @media (max-width: 1023px) {
+    .cookie-consent {
+      bottom: calc(64px + env(safe-area-inset-bottom));
+    }
+  }
+</style>
+
+<script>
+  import { readConsent, writeConsent } from "../scripts/consent";
+
+  const root = document.getElementById("cookie-consent");
+  if (root) {
+    const existing = readConsent();
+    if (!existing) root.hidden = false;
+
+    root.querySelectorAll<HTMLButtonElement>("[data-consent]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const accept = btn.dataset.consent === "accept";
+        writeConsent(accept);
+        root.hidden = true;
+      });
+    });
+
+    document.querySelectorAll<HTMLElement>("[data-open-cookie-settings]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        root.hidden = false;
+        root.querySelector<HTMLButtonElement>("[data-consent]")?.focus();
+      });
+    });
+  }
+</script>

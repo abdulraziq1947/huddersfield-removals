@@ -1,6 +1,5 @@
 ---
 import { business } from "../data/business";
-import Icon from "./Icon.astro";
 
 interface Props {
   heading?: string;
@@ -14,6 +13,64 @@ const { heading = "Get your free quote" } = Astro.props;
     Prefer to talk? Call <a href={`tel:${business.phoneE164}`}><strong>{business.phoneDisplay}</strong></a>,
     open {business.hours.label} every day.
   </p>
-  <div id="removals-enquiry"></div>
-  <script is:inline src="https://removals-crm.com/forms/embed.js" data-primary="1e4d7b" data-accent="e8a317" data-container="removals-enquiry"></script>
+  <div
+    data-quote-embed
+    data-container="removals-enquiry"
+    data-primary="1e4d7b"
+    data-accent="e8a317"
+  >
+    <div id="removals-enquiry"></div>
+    <div class="quote-consent" data-quote-placeholder hidden>
+      <p style="color: var(--muted);">
+        Our online quote form is provided by Removals CRM and may use cookies or local storage to work.
+        Load it if you are happy with that, or call us.
+      </p>
+      <button type="button" class="btn" data-load-quote>Load quote form</button>
+    </div>
+  </div>
 </div>
+
+<script>
+  import { hasFunctionalConsent, writeConsent, CONSENT_EVENT } from "../scripts/consent";
+
+  const SCRIPT_SRC = "https://removals-crm.com/forms/embed.js";
+
+  function loadQuote(root: HTMLElement) {
+    if (root.getAttribute("data-quote-loaded") === "1") return;
+    root.querySelector("[data-quote-placeholder]")?.setAttribute("hidden", "");
+    const script = document.createElement("script");
+    script.src = SCRIPT_SRC;
+    script.async = true;
+    script.setAttribute("data-container", root.dataset.container || "removals-enquiry");
+    for (const attr of ["primary", "accent", "website", "title"] as const) {
+      const val = root.dataset[attr];
+      if (val) script.setAttribute(`data-${attr}`, val);
+    }
+    root.appendChild(script);
+    root.setAttribute("data-quote-loaded", "1");
+  }
+
+  function showPlaceholder(root: HTMLElement) {
+    if (root.getAttribute("data-quote-loaded") === "1") return;
+    root.querySelector("[data-quote-placeholder]")?.removeAttribute("hidden");
+  }
+
+  function sync() {
+    document.querySelectorAll<HTMLElement>("[data-quote-embed]").forEach((root) => {
+      if (hasFunctionalConsent()) loadQuote(root);
+      else showPlaceholder(root);
+    });
+  }
+
+  document.querySelectorAll("[data-load-quote]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const root = btn.closest<HTMLElement>("[data-quote-embed]");
+      if (!root) return;
+      if (!hasFunctionalConsent()) writeConsent(true);
+      loadQuote(root);
+    });
+  });
+
+  sync();
+  window.addEventListener(CONSENT_EVENT, sync);
+</script>
